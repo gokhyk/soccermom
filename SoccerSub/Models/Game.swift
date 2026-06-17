@@ -24,6 +24,9 @@ final class Game {
     @Relationship(deleteRule: .cascade, inverse: \PlayerGameAppearance.game)
     var appearances: [PlayerGameAppearance]
 
+    @Relationship(deleteRule: .cascade, inverse: \SubstitutionLog.game)
+    var substitutionLogs: [SubstitutionLog]
+
     init(
         id: UUID = UUID(),
         opponent: String,
@@ -50,5 +53,6 @@ final class Game {
         self.status = status
         self.availabilities = []
         self.appearances = []
+        self.substitutionLogs = []
     }
 }

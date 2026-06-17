@@ -64,7 +64,7 @@ struct AvailabilityView: View {
             )
         }
         .navigationDestination(isPresented: $gameStarted) {
-            LiveGamePlaceholderView(game: game)
+            LiveGameView(game: game, context: modelContext)
         }
     }
 

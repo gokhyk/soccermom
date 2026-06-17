@@ -19,6 +19,15 @@ final class Player {
     @Relationship(deleteRule: .cascade, inverse: \PlayerGameAppearance.player)
     var appearances: [PlayerGameAppearance]
 
+    var eligiblePositions: Set<Position> {
+        var p = Set<Position>()
+        if canPlayGoalkeeper { p.insert(.goalkeeper) }
+        if canPlayDefender   { p.insert(.defender) }
+        if canPlayMidfielder { p.insert(.midfielder) }
+        if canPlayAttacker   { p.insert(.attacker) }
+        return p
+    }
+
     init(
         id: UUID = UUID(),
         name: String,

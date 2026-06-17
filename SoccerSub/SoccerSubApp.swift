@@ -14,7 +14,8 @@ struct SoccerSubApp: App {
             Player.self,
             Game.self,
             Availability.self,
-            PlayerGameAppearance.self
+            PlayerGameAppearance.self,
+            SubstitutionLog.self
         ])
         .environment(\.themeManager, themeManager)
     }
