@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		03E9AE9711359831330F6F6F /* PlayerGameAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DDE7880F77FA0168A6C192 /* PlayerGameAppearance.swift */; };
+		14E96D18DB095FA021AEC497 /* GameEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C6684CE4807D8559F12DC4 /* GameEditViewModel.swift */; };
 		19DB42375C6BBDC58260FF8F /* PlayerEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C52EF62F6BD779CE5E8A05 /* PlayerEditView.swift */; };
 		279AB7D14CC4F433785AE777 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75CE6475E55B332A490D216 /* Team.swift */; };
+		2E88D4F8E264D0C6B4B0408D /* GameEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACBF88D81CF4803254A1142 /* GameEditView.swift */; };
 		416B25215E0D075B06D95FE8 /* SoccerSubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73357AF64D39DBDC963AFA8 /* SoccerSubApp.swift */; };
 		43D045E3D7A736D9E0538BA9 /* ModelRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ACCE67852E17959EB91A0B /* ModelRelationshipTests.swift */; };
 		4F3F95DC8E9A8A5F81FB9DD0 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED4E4D5C128831F90AC88A /* Player.swift */; };
@@ -25,15 +27,18 @@
 		A39A96BB2BCD2D1F25DB2DD9 /* PlayerEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C060B36E1D4B1C5C5BF08D22 /* PlayerEditViewModel.swift */; };
 		A3E2667F896E5D8B83B85513 /* PlayerEditViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */; };
 		A4E9480988B026B3C013CA70 /* TeamSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFA318D9E159654DA121845 /* TeamSetupView.swift */; };
+		B012D870A13813B5C11E1FC7 /* GameEditViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE5401F22E7BD41ECA8633 /* GameEditViewModelTests.swift */; };
 		B09582480458368DFA506D2A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D0E53442435F56AC5EDA /* ThemeManager.swift */; };
 		B8DD200D3BBB7A73F7A472E6 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466F2158FC088A4D8E33DF6 /* TimeFormatting.swift */; };
 		C41D7CD863061BB47F93C5B7 /* LogicPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */; };
 		C41E7E78B857A0F9270AB3B1 /* TeamSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D336840AFDABAFCEA5DD34 /* TeamSetupViewModel.swift */; };
 		C4341818BBDDDB4EFDCE077F /* AgeGroupDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C3A4FA8363F631C06C114 /* AgeGroupDefaults.swift */; };
+		CF2CE7915A1A386ABA1DF935 /* GameSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F39068AF8B51222ACE3602 /* GameSorting.swift */; };
 		D1440F283E57A35A4599E43F /* TimeFormattingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7B806F0A43004062788719 /* TimeFormattingTests.swift */; };
 		E51DD57134FE449DEF2061FA /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101CFCD59E04116F5F6D991 /* Enums.swift */; };
 		F0D824A2538C99D8C3A3A3F4 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */; };
 		F38730888F837E31EE60ECF8 /* AgeGroupDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7E0EFD879F8398158CEA01 /* AgeGroupDefaultsTests.swift */; };
+		F5C672BAE151D9C0528C6422 /* GameManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D703AFFF7D0971FDC329286 /* GameManagementView.swift */; };
 		FC380DD2EFD4BE221DC2AC3C /* ThemeManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFBD17B5B54CA3300599A2 /* ThemeManagementView.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +55,7 @@
 /* Begin PBXFileReference section */
 		05C52EF62F6BD779CE5E8A05 /* PlayerEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEditView.swift; sourceTree = "<group>"; };
 		0B7E0EFD879F8398158CEA01 /* AgeGroupDefaultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeGroupDefaultsTests.swift; sourceTree = "<group>"; };
+		18BE5401F22E7BD41ECA8633 /* GameEditViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEditViewModelTests.swift; sourceTree = "<group>"; };
 		18ED4E4D5C128831F90AC88A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		1A7B806F0A43004062788719 /* TimeFormattingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormattingTests.swift; sourceTree = "<group>"; };
 		21ACCE67852E17959EB91A0B /* ModelRelationshipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRelationshipTests.swift; sourceTree = "<group>"; };
@@ -63,10 +69,12 @@
 		6E5A2854ABCAEB8766936763 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		7466F2158FC088A4D8E33DF6 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
 		77BFBD17B5B54CA3300599A2 /* ThemeManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagementView.swift; sourceTree = "<group>"; };
+		7D703AFFF7D0971FDC329286 /* GameManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManagementView.swift; sourceTree = "<group>"; };
 		85394FF409B59C3F5A21DB2A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		85DDE7880F77FA0168A6C192 /* PlayerGameAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGameAppearance.swift; sourceTree = "<group>"; };
 		8D94454FA9A9F0C5A7C986C5 /* SoccerSubTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SoccerSubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicPlaceholder.swift; sourceTree = "<group>"; };
+		94C6684CE4807D8559F12DC4 /* GameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEditViewModel.swift; sourceTree = "<group>"; };
 		9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
 		9C89DBB8D683518010AEA968 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		B4B1396DDF1296403D314929 /* ThemePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholder.swift; sourceTree = "<group>"; };
@@ -76,6 +84,8 @@
 		C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEditViewModelTests.swift; sourceTree = "<group>"; };
 		C75CE6475E55B332A490D216 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		D73357AF64D39DBDC963AFA8 /* SoccerSubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoccerSubApp.swift; sourceTree = "<group>"; };
+		D8F39068AF8B51222ACE3602 /* GameSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSorting.swift; sourceTree = "<group>"; };
+		EACBF88D81CF4803254A1142 /* GameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEditView.swift; sourceTree = "<group>"; };
 		FE5404C8C725021CC1F9700A /* SoccerSub.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SoccerSub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF407FF0300DDDC1022F9513 /* ViewModelsPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsPlaceholder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				0B7E0EFD879F8398158CEA01 /* AgeGroupDefaultsTests.swift */,
+				18BE5401F22E7BD41ECA8633 /* GameEditViewModelTests.swift */,
 				21ACCE67852E17959EB91A0B /* ModelRelationshipTests.swift */,
 				C4493A198B9BCE2719FFAD6E /* ModelRoundTripTests.swift */,
 				C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */,
@@ -131,6 +142,8 @@
 		A930EB82AA682898E78EA74D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				94C6684CE4807D8559F12DC4 /* GameEditViewModel.swift */,
+				D8F39068AF8B51222ACE3602 /* GameSorting.swift */,
 				C060B36E1D4B1C5C5BF08D22 /* PlayerEditViewModel.swift */,
 				60D336840AFDABAFCEA5DD34 /* TeamSetupViewModel.swift */,
 				FF407FF0300DDDC1022F9513 /* ViewModelsPlaceholder.swift */,
@@ -150,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				335131850AD3ACAD8A16907B /* ContentView.swift */,
+				EACBF88D81CF4803254A1142 /* GameEditView.swift */,
+				7D703AFFF7D0971FDC329286 /* GameManagementView.swift */,
 				05C52EF62F6BD779CE5E8A05 /* PlayerEditView.swift */,
 				9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */,
 				BFFA318D9E159654DA121845 /* TeamSetupView.swift */,
@@ -254,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F38730888F837E31EE60ECF8 /* AgeGroupDefaultsTests.swift in Sources */,
+				B012D870A13813B5C11E1FC7 /* GameEditViewModelTests.swift in Sources */,
 				43D045E3D7A736D9E0538BA9 /* ModelRelationshipTests.swift in Sources */,
 				53BD37EB4BBDE34D795CC1E6 /* ModelRoundTripTests.swift in Sources */,
 				A3E2667F896E5D8B83B85513 /* PlayerEditViewModelTests.swift in Sources */,
@@ -273,6 +289,10 @@
 				78AD6D9969BE208BB2AAA2D7 /* ContentView.swift in Sources */,
 				E51DD57134FE449DEF2061FA /* Enums.swift in Sources */,
 				94939282209969175D3D4BC1 /* Game.swift in Sources */,
+				2E88D4F8E264D0C6B4B0408D /* GameEditView.swift in Sources */,
+				14E96D18DB095FA021AEC497 /* GameEditViewModel.swift in Sources */,
+				F5C672BAE151D9C0528C6422 /* GameManagementView.swift in Sources */,
+				CF2CE7915A1A386ABA1DF935 /* GameSorting.swift in Sources */,
 				C41D7CD863061BB47F93C5B7 /* LogicPlaceholder.swift in Sources */,
 				4F3F95DC8E9A8A5F81FB9DD0 /* Player.swift in Sources */,
 				19DB42375C6BBDC58260FF8F /* PlayerEditView.swift in Sources */,
