@@ -3,6 +3,8 @@ import SwiftData
 
 @main
 struct SoccerSubApp: App {
+    @State private var themeManager = ThemeManager.shared
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -14,5 +16,6 @@ struct SoccerSubApp: App {
             Availability.self,
             PlayerGameAppearance.self
         ])
+        .environment(\.themeManager, themeManager)
     }
 }

@@ -14,6 +14,8 @@
 		43D045E3D7A736D9E0538BA9 /* ModelRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ACCE67852E17959EB91A0B /* ModelRelationshipTests.swift */; };
 		4F3F95DC8E9A8A5F81FB9DD0 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ED4E4D5C128831F90AC88A /* Player.swift */; };
 		53BD37EB4BBDE34D795CC1E6 /* ModelRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4493A198B9BCE2719FFAD6E /* ModelRoundTripTests.swift */; };
+		574E7D7F8CDF134845956F96 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5A2854ABCAEB8766936763 /* ThemeManagerTests.swift */; };
+		5D69E8EE15027EB8C4637D29 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C89DBB8D683518010AEA968 /* AppTheme.swift */; };
 		5F8F3482C8E9CC1B97B51B88 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DD49191BA9EB30B54D83E1 /* Availability.swift */; };
 		668E6FCEA0ACD35A8AD35102 /* ThemePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B1396DDF1296403D314929 /* ThemePlaceholder.swift */; };
 		6880AFC19450FC13B6C53B2B /* TeamSetupViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4097BBE088B1C9A14C4C65A2 /* TeamSetupViewModelTests.swift */; };
@@ -23,6 +25,7 @@
 		A39A96BB2BCD2D1F25DB2DD9 /* PlayerEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C060B36E1D4B1C5C5BF08D22 /* PlayerEditViewModel.swift */; };
 		A3E2667F896E5D8B83B85513 /* PlayerEditViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */; };
 		A4E9480988B026B3C013CA70 /* TeamSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFA318D9E159654DA121845 /* TeamSetupView.swift */; };
+		B09582480458368DFA506D2A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D0E53442435F56AC5EDA /* ThemeManager.swift */; };
 		B8DD200D3BBB7A73F7A472E6 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466F2158FC088A4D8E33DF6 /* TimeFormatting.swift */; };
 		C41D7CD863061BB47F93C5B7 /* LogicPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */; };
 		C41E7E78B857A0F9270AB3B1 /* TeamSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D336840AFDABAFCEA5DD34 /* TeamSetupViewModel.swift */; };
@@ -31,6 +34,7 @@
 		E51DD57134FE449DEF2061FA /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6101CFCD59E04116F5F6D991 /* Enums.swift */; };
 		F0D824A2538C99D8C3A3A3F4 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */; };
 		F38730888F837E31EE60ECF8 /* AgeGroupDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7E0EFD879F8398158CEA01 /* AgeGroupDefaultsTests.swift */; };
+		FC380DD2EFD4BE221DC2AC3C /* ThemeManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BFBD17B5B54CA3300599A2 /* ThemeManagementView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,14 +57,18 @@
 		4097BBE088B1C9A14C4C65A2 /* TeamSetupViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSetupViewModelTests.swift; sourceTree = "<group>"; };
 		451C3A4FA8363F631C06C114 /* AgeGroupDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeGroupDefaults.swift; sourceTree = "<group>"; };
 		54DD49191BA9EB30B54D83E1 /* Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availability.swift; sourceTree = "<group>"; };
+		5886D0E53442435F56AC5EDA /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		60D336840AFDABAFCEA5DD34 /* TeamSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSetupViewModel.swift; sourceTree = "<group>"; };
 		6101CFCD59E04116F5F6D991 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		6E5A2854ABCAEB8766936763 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		7466F2158FC088A4D8E33DF6 /* TimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatting.swift; sourceTree = "<group>"; };
+		77BFBD17B5B54CA3300599A2 /* ThemeManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagementView.swift; sourceTree = "<group>"; };
 		85394FF409B59C3F5A21DB2A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		85DDE7880F77FA0168A6C192 /* PlayerGameAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGameAppearance.swift; sourceTree = "<group>"; };
 		8D94454FA9A9F0C5A7C986C5 /* SoccerSubTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SoccerSubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicPlaceholder.swift; sourceTree = "<group>"; };
 		9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
+		9C89DBB8D683518010AEA968 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		B4B1396DDF1296403D314929 /* ThemePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePlaceholder.swift; sourceTree = "<group>"; };
 		BFFA318D9E159654DA121845 /* TeamSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSetupView.swift; sourceTree = "<group>"; };
 		C060B36E1D4B1C5C5BF08D22 /* PlayerEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEditViewModel.swift; sourceTree = "<group>"; };
@@ -81,6 +89,7 @@
 				C4493A198B9BCE2719FFAD6E /* ModelRoundTripTests.swift */,
 				C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */,
 				4097BBE088B1C9A14C4C65A2 /* TeamSetupViewModelTests.swift */,
+				6E5A2854ABCAEB8766936763 /* ThemeManagerTests.swift */,
 				1A7B806F0A43004062788719 /* TimeFormattingTests.swift */,
 			);
 			path = Tests;
@@ -144,6 +153,7 @@
 				05C52EF62F6BD779CE5E8A05 /* PlayerEditView.swift */,
 				9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */,
 				BFFA318D9E159654DA121845 /* TeamSetupView.swift */,
+				77BFBD17B5B54CA3300599A2 /* ThemeManagementView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -151,6 +161,8 @@
 		EADA3AFAE90C932BA9262772 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				9C89DBB8D683518010AEA968 /* AppTheme.swift */,
+				5886D0E53442435F56AC5EDA /* ThemeManager.swift */,
 				B4B1396DDF1296403D314929 /* ThemePlaceholder.swift */,
 			);
 			path = Theme;
@@ -246,6 +258,7 @@
 				53BD37EB4BBDE34D795CC1E6 /* ModelRoundTripTests.swift in Sources */,
 				A3E2667F896E5D8B83B85513 /* PlayerEditViewModelTests.swift in Sources */,
 				6880AFC19450FC13B6C53B2B /* TeamSetupViewModelTests.swift in Sources */,
+				574E7D7F8CDF134845956F96 /* ThemeManagerTests.swift in Sources */,
 				D1440F283E57A35A4599E43F /* TimeFormattingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4341818BBDDDB4EFDCE077F /* AgeGroupDefaults.swift in Sources */,
+				5D69E8EE15027EB8C4637D29 /* AppTheme.swift in Sources */,
 				5F8F3482C8E9CC1B97B51B88 /* Availability.swift in Sources */,
 				78AD6D9969BE208BB2AAA2D7 /* ContentView.swift in Sources */,
 				E51DD57134FE449DEF2061FA /* Enums.swift in Sources */,
@@ -269,6 +283,8 @@
 				279AB7D14CC4F433785AE777 /* Team.swift in Sources */,
 				A4E9480988B026B3C013CA70 /* TeamSetupView.swift in Sources */,
 				C41E7E78B857A0F9270AB3B1 /* TeamSetupViewModel.swift in Sources */,
+				FC380DD2EFD4BE221DC2AC3C /* ThemeManagementView.swift in Sources */,
+				B09582480458368DFA506D2A /* ThemeManager.swift in Sources */,
 				668E6FCEA0ACD35A8AD35102 /* ThemePlaceholder.swift in Sources */,
 				B8DD200D3BBB7A73F7A472E6 /* TimeFormatting.swift in Sources */,
 				8F0F497BB0DFAEE2913892B8 /* ViewModelsPlaceholder.swift in Sources */,
