@@ -32,8 +32,10 @@
 		A39A96BB2BCD2D1F25DB2DD9 /* PlayerEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C060B36E1D4B1C5C5BF08D22 /* PlayerEditViewModel.swift */; };
 		A3E2667F896E5D8B83B85513 /* PlayerEditViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */; };
 		A4E9480988B026B3C013CA70 /* TeamSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFA318D9E159654DA121845 /* TeamSetupView.swift */; };
+		A71AAA54A324A3C2F14F557C /* SubstitutionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BB6530BDA55638BB6BB2CB /* SubstitutionEngineTests.swift */; };
 		B012D870A13813B5C11E1FC7 /* GameEditViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BE5401F22E7BD41ECA8633 /* GameEditViewModelTests.swift */; };
 		B09582480458368DFA506D2A /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5886D0E53442435F56AC5EDA /* ThemeManager.swift */; };
+		B4EB889A598CF8F9D3E37BA4 /* SubstitutionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC4BFE2559EED006709CFB7 /* SubstitutionEngine.swift */; };
 		B8DD200D3BBB7A73F7A472E6 /* TimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466F2158FC088A4D8E33DF6 /* TimeFormatting.swift */; };
 		C41D7CD863061BB47F93C5B7 /* LogicPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */; };
 		C41E7E78B857A0F9270AB3B1 /* TeamSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D336840AFDABAFCEA5DD34 /* TeamSetupViewModel.swift */; };
@@ -81,6 +83,7 @@
 		85DDE7880F77FA0168A6C192 /* PlayerGameAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerGameAppearance.swift; sourceTree = "<group>"; };
 		8D94454FA9A9F0C5A7C986C5 /* SoccerSubTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SoccerSubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicPlaceholder.swift; sourceTree = "<group>"; };
+		92BB6530BDA55638BB6BB2CB /* SubstitutionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubstitutionEngineTests.swift; sourceTree = "<group>"; };
 		94C6684CE4807D8559F12DC4 /* GameEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEditViewModel.swift; sourceTree = "<group>"; };
 		9547BAB93EB0FB978A595E6F /* GameStartLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStartLogic.swift; sourceTree = "<group>"; };
 		9690ABDDC18FB5DD5A2A32FC /* RosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
@@ -96,6 +99,7 @@
 		D8F39068AF8B51222ACE3602 /* GameSorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSorting.swift; sourceTree = "<group>"; };
 		EACBF88D81CF4803254A1142 /* GameEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEditView.swift; sourceTree = "<group>"; };
 		F150EF1C56B882134E98E8C5 /* AvailabilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewModelTests.swift; sourceTree = "<group>"; };
+		FBC4BFE2559EED006709CFB7 /* SubstitutionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubstitutionEngine.swift; sourceTree = "<group>"; };
 		FE5404C8C725021CC1F9700A /* SoccerSub.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SoccerSub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF407FF0300DDDC1022F9513 /* ViewModelsPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsPlaceholder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +114,7 @@
 				21ACCE67852E17959EB91A0B /* ModelRelationshipTests.swift */,
 				C4493A198B9BCE2719FFAD6E /* ModelRoundTripTests.swift */,
 				C530768C4898297F87AEE1DB /* PlayerEditViewModelTests.swift */,
+				92BB6530BDA55638BB6BB2CB /* SubstitutionEngineTests.swift */,
 				4097BBE088B1C9A14C4C65A2 /* TeamSetupViewModelTests.swift */,
 				6E5A2854ABCAEB8766936763 /* ThemeManagerTests.swift */,
 				1A7B806F0A43004062788719 /* TimeFormattingTests.swift */,
@@ -123,6 +128,7 @@
 				451C3A4FA8363F631C06C114 /* AgeGroupDefaults.swift */,
 				9547BAB93EB0FB978A595E6F /* GameStartLogic.swift */,
 				90F02D3355CD93B585DF5539 /* LogicPlaceholder.swift */,
+				FBC4BFE2559EED006709CFB7 /* SubstitutionEngine.swift */,
 				7466F2158FC088A4D8E33DF6 /* TimeFormatting.swift */,
 			);
 			path = Logic;
@@ -289,6 +295,7 @@
 				43D045E3D7A736D9E0538BA9 /* ModelRelationshipTests.swift in Sources */,
 				53BD37EB4BBDE34D795CC1E6 /* ModelRoundTripTests.swift in Sources */,
 				A3E2667F896E5D8B83B85513 /* PlayerEditViewModelTests.swift in Sources */,
+				A71AAA54A324A3C2F14F557C /* SubstitutionEngineTests.swift in Sources */,
 				6880AFC19450FC13B6C53B2B /* TeamSetupViewModelTests.swift in Sources */,
 				574E7D7F8CDF134845956F96 /* ThemeManagerTests.swift in Sources */,
 				D1440F283E57A35A4599E43F /* TimeFormattingTests.swift in Sources */,
@@ -320,6 +327,7 @@
 				03E9AE9711359831330F6F6F /* PlayerGameAppearance.swift in Sources */,
 				F0D824A2538C99D8C3A3A3F4 /* RosterView.swift in Sources */,
 				416B25215E0D075B06D95FE8 /* SoccerSubApp.swift in Sources */,
+				B4EB889A598CF8F9D3E37BA4 /* SubstitutionEngine.swift in Sources */,
 				279AB7D14CC4F433785AE777 /* Team.swift in Sources */,
 				A4E9480988B026B3C013CA70 /* TeamSetupView.swift in Sources */,
 				C41E7E78B857A0F9270AB3B1 /* TeamSetupViewModel.swift in Sources */,
