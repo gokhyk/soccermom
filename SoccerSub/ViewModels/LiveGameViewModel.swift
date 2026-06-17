@@ -237,6 +237,93 @@ final class LiveGameViewModel {
         showSubstitutionOverlay = false
         pendingSubstitutions    = []
     }
+
+    // MARK: – Injury / Early Leave
+
+    /// Immediately removes an on-field player and returns the best available bench
+    /// replacement (using `immediateSubstitution`), or nil if none qualifies.
+    /// The caller is responsible for confirming and applying the returned pair via
+    /// `applyInjuryReplacement(_:reason:)`.
+    func removeForInjury(_ appearance: PlayerGameAppearance) -> SubstitutionPair? {
+        guard let player = appearance.player,
+              let position = appearance.positionAssigned else { return nil }
+
+        let outgoing = OnFieldPlayer(
+            id: player.id,
+            secondsPlayed: appearance.secondsPlayed,
+            position: position
+        )
+
+        // Snapshot bench BEFORE modifying state so the outgoing player isn't included.
+        let availBench = benchAppearances.compactMap { app -> BenchPlayer? in
+            guard let p = app.player else { return nil }
+            return BenchPlayer(id: p.id, secondsPlayed: app.secondsPlayed,
+                               eligiblePositions: p.eligiblePositions)
+        }
+
+        appearance.onFieldStatus    = .bench
+        appearance.positionAssigned = nil
+
+        let pair = SubstitutionEngine.immediateSubstitution(outgoing: outgoing, bench: availBench)
+        try? context.save()
+        return pair
+    }
+
+    /// Applies the replacement pair returned by `removeForInjury`.
+    func applyInjuryReplacement(_ pair: SubstitutionPair, reason: SubstitutionReason) {
+        guard let inApp = game.appearances.first(where: { $0.player?.id == pair.playerIn.id })
+        else { return }
+
+        inApp.onFieldStatus    = .onField
+        inApp.positionAssigned = pair.position
+
+        let log = SubstitutionLog(
+            elapsedPeriodSeconds: elapsedPeriodSeconds,
+            period: currentPeriod,
+            reason: reason
+        )
+        log.game      = game
+        log.playerOut = game.appearances.first(where: { $0.player?.id == pair.playerOut.id })?.player
+        log.playerIn  = inApp.player
+        context.insert(log)
+        try? context.save()
+    }
+
+    // MARK: – Bench ↔ Absent
+
+    /// Marks a bench player absent for the remainder of the game.
+    /// Freezes `secondsCredited` at the game's target-average value.
+    /// The target is computed *before* updating the Availability record so the
+    /// outgoing player is still included in the divisor, giving them their fair share.
+    func markAbsent(_ appearance: PlayerGameAppearance) {
+        let availableCount = game.availabilities.filter { $0.status == .available }.count
+        let target = GameStartLogic.targetSeconds(
+            periodDurationSeconds: game.periodDurationSeconds,
+            numberOfPeriods: game.numberOfPeriods,
+            playersOnField: game.playersOnField,
+            availableCount: availableCount
+        )
+
+        appearance.onFieldStatus   = .absent
+        appearance.secondsCredited = target
+
+        if let avail = game.availabilities.first(where: { $0.player?.id == appearance.player?.id }) {
+            avail.status = .absent
+        }
+        try? context.save()
+    }
+
+    /// Returns a previously absent player to the bench (late arrival).
+    /// Resets `secondsCredited` to `secondsPlayed` so credits track actual time from now.
+    func returnToBench(_ appearance: PlayerGameAppearance) {
+        appearance.onFieldStatus   = .bench
+        appearance.secondsCredited = appearance.secondsPlayed
+
+        if let avail = game.availabilities.first(where: { $0.player?.id == appearance.player?.id }) {
+            avail.status = .available
+        }
+        try? context.save()
+    }
 }
 
 // MARK: – Position display helper (field diagram top → bottom ordering)

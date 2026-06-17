@@ -4,8 +4,21 @@ import SwiftData
 struct LiveGameView: View {
     let game: Game
     @State private var viewModel: LiveGameViewModel
+
+    // Pre-game lineup
     @State private var showPositionPicker = false
     @State private var pendingBenchAppearance: PlayerGameAppearance? = nil
+
+    // Injury / early-leave workflow (two-step)
+    @State private var showInjuryReasonSheet = false
+    @State private var tappedOnFieldAppearance: PlayerGameAppearance? = nil
+    @State private var showInjuryReplacementAlert = false
+    @State private var proposedInjuryReplacement: SubstitutionPair? = nil
+    @State private var injuryReason: SubstitutionReason = .injury
+
+    // Bench → Absent confirmation
+    @State private var showAbsentConfirmation = false
+    @State private var tappedBenchAppearance: PlayerGameAppearance? = nil
 
     init(game: Game, context: ModelContext) {
         self.game = game
@@ -25,9 +38,11 @@ struct LiveGameView: View {
         }
         .navigationTitle("vs \(game.opponent)")
         .navigationBarTitleDisplayMode(.inline)
+        // Scheduled substitution overlay
         .sheet(isPresented: $viewModel.showSubstitutionOverlay) {
             SubstitutionOverlayView(viewModel: viewModel)
         }
+        // Period over
         .alert(
             "Period \(viewModel.currentPeriod) Over",
             isPresented: $viewModel.isPeriodEnded
@@ -45,11 +60,49 @@ struct LiveGameView: View {
         } message: {
             Text("The period clock has reached \(game.periodDurationSeconds / 60) minutes.")
         }
+        // Game over
         .alert("Game Over", isPresented: $viewModel.isGameOver) {
             Button("OK") { }
         } message: {
             Text("All periods complete. Game marked as done.")
         }
+        // Injury reason (step 1)
+        .confirmationDialog(
+            (tappedOnFieldAppearance?.player?.name).map { "Remove \($0)?" } ?? "Remove Player?",
+            isPresented: $showInjuryReasonSheet,
+            titleVisibility: .visible
+        ) {
+            Button("Injury") { handleInjury(reason: .injury) }
+            Button("Early Leave") { handleInjury(reason: .earlyLeave) }
+            Button("Cancel", role: .cancel) { tappedOnFieldAppearance = nil }
+        }
+        // Injury replacement proposal (step 2)
+        .alert("Proposed Replacement", isPresented: $showInjuryReplacementAlert) {
+            Button("Bring On") {
+                if let pair = proposedInjuryReplacement {
+                    viewModel.applyInjuryReplacement(pair, reason: injuryReason)
+                }
+                proposedInjuryReplacement = nil
+            }
+            Button("Remove Without Replacement", role: .cancel) {
+                proposedInjuryReplacement = nil
+            }
+        } message: {
+            Text(injuryReplacementMessage)
+        }
+        // Bench → Absent confirmation
+        .confirmationDialog(
+            (tappedBenchAppearance?.player?.name).map { "Mark \($0) Absent?" } ?? "Mark Absent?",
+            isPresented: $showAbsentConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Mark Absent", role: .destructive) {
+                if let app = tappedBenchAppearance { viewModel.markAbsent(app) }
+                tappedBenchAppearance = nil
+            }
+            Button("Cancel", role: .cancel) { tappedBenchAppearance = nil }
+        }
+        // Pre-game position picker
         .confirmationDialog(
             "Assign position",
             isPresented: $showPositionPicker,
@@ -97,7 +150,6 @@ struct LiveGameView: View {
             RoundedRectangle(cornerRadius: 12)
                 .strokeBorder(.white.opacity(0.4), lineWidth: 1)
 
-            // Center line
             Rectangle()
                 .fill(.white.opacity(0.3))
                 .frame(height: 1)
@@ -115,12 +167,22 @@ struct LiveGameView: View {
         }
     }
 
+    /// Tapping an on-field token during a live period opens the injury/early-leave
+    /// dialog. Before the whistle, tapping moves the player back to bench for
+    /// lineup adjustments.
     private func fieldRow(for position: Position) -> some View {
         let apps = viewModel.onFieldAppearances.filter { $0.positionAssigned == position }
         return HStack(spacing: 8) {
             ForEach(apps) { app in
                 PlayerTokenView(appearance: app)
-                    .onTapGesture { viewModel.removeFromField(app) }
+                    .onTapGesture {
+                        if viewModel.isRunning {
+                            tappedOnFieldAppearance = app
+                            showInjuryReasonSheet   = true
+                        } else {
+                            viewModel.removeFromField(app)
+                        }
+                    }
             }
         }
     }
@@ -135,7 +197,7 @@ struct LiveGameView: View {
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 12)
             } else if viewModel.isPeriodEnded {
-                EmptyView()  // handled by alert
+                EmptyView()
             } else if viewModel.isRunning {
                 Button(role: .destructive, action: viewModel.stopClock) {
                     Label("Pause Clock", systemImage: "pause.circle.fill")
@@ -166,17 +228,26 @@ struct LiveGameView: View {
                         BenchRowView(appearance: app)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                pendingBenchAppearance = app
-                                showPositionPicker = true
+                                if viewModel.isRunning {
+                                    // During a live period: tap marks the player absent.
+                                    tappedBenchAppearance  = app
+                                    showAbsentConfirmation = true
+                                } else {
+                                    // Pre-game lineup setup: tap to assign to field.
+                                    pendingBenchAppearance = app
+                                    showPositionPicker     = true
+                                }
                             }
                     }
                 }
             }
             if !viewModel.absentAppearances.isEmpty {
-                Section("Absent") {
+                Section("Absent — tap to return") {
                     ForEach(viewModel.absentAppearances) { app in
                         BenchRowView(appearance: app)
                             .foregroundStyle(.secondary)
+                            .contentShape(Rectangle())
+                            .onTapGesture { viewModel.returnToBench(app) }
                     }
                 }
             }
@@ -189,6 +260,22 @@ struct LiveGameView: View {
     private func positionsFor(_ app: PlayerGameAppearance) -> [Position] {
         guard let player = app.player else { return Position.allCases }
         return Position.allCases.filter { player.eligiblePositions.contains($0) }
+    }
+
+    private func handleInjury(reason: SubstitutionReason) {
+        guard let app = tappedOnFieldAppearance else { return }
+        injuryReason              = reason
+        tappedOnFieldAppearance   = nil
+        proposedInjuryReplacement = viewModel.removeForInjury(app)
+        showInjuryReplacementAlert = proposedInjuryReplacement != nil
+    }
+
+    private var injuryReplacementMessage: String {
+        guard let pair = proposedInjuryReplacement else { return "" }
+        let name = viewModel.game.appearances
+            .first(where: { $0.player?.id == pair.playerIn.id })?
+            .player?.name ?? "?"
+        return "\(name) (\(TimeFormatting.format(pair.playerIn.secondsPlayed)) played) is the best available replacement."
     }
 }
 
