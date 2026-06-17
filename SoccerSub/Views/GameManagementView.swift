@@ -15,10 +15,13 @@ struct GameManagementView: View {
     var body: some View {
         List {
             ForEach(sortedGames) { game in
-                GameRow(game: game)
-                    .contentShape(Rectangle())
-                    .onTapGesture { gameToEdit = game }
-                    // TODO (Prompt 06): replace tap with navigation to AvailabilityView
+                NavigationLink(destination: AvailabilityView(game: game)) {
+                    GameRow(game: game)
+                }
+                .swipeActions(edge: .leading) {
+                    Button("Edit") { gameToEdit = game }
+                        .tint(.blue)
+                }
             }
             .onDelete(perform: deleteGames)
         }

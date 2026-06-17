@@ -11,6 +11,14 @@ enum SubstitutionFrequency: String, Codable, CaseIterable {
     case frequent    // ~4 min of period time
     case normal      // ~7 min
     case infrequent  // ~12 min
+
+    var displayName: String {
+        switch self {
+        case .frequent:   return "Frequent (~4 min)"
+        case .normal:     return "Normal (~7 min)"
+        case .infrequent: return "Infrequent (~12 min)"
+        }
+    }
 }
 
 enum GameStatus: String, Codable {
