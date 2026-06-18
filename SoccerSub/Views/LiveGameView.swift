@@ -2,6 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct LiveGameView: View {
+    @Environment(\.themeManager) private var themeManager
+
     let game: Game
     @State private var viewModel: LiveGameViewModel
 
@@ -19,6 +21,9 @@ struct LiveGameView: View {
     // Bench → Absent confirmation
     @State private var showAbsentConfirmation = false
     @State private var tappedBenchAppearance: PlayerGameAppearance? = nil
+
+    // End-game confirmation
+    @State private var showEndGameConfirmation = false
 
     init(game: Game, context: ModelContext) {
         self.game = game
@@ -38,6 +43,25 @@ struct LiveGameView: View {
         }
         .navigationTitle("vs \(game.opponent)")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if !viewModel.isGameOver {
+                    Menu {
+                        Button("End Game", role: .destructive) {
+                            showEndGameConfirmation = true
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                    }
+                }
+            }
+        }
+        .alert("End Game?", isPresented: $showEndGameConfirmation) {
+            Button("End Game", role: .destructive) { viewModel.endGameManually() }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("This will end the game and save season stats. This cannot be undone.")
+        }
         // Scheduled substitution overlay
         .sheet(isPresented: $viewModel.showSubstitutionOverlay) {
             SubstitutionOverlayView(viewModel: viewModel)
@@ -146,7 +170,12 @@ struct LiveGameView: View {
     private var fieldDiagram: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.green.gradient)
+                .fill(LinearGradient(
+                    colors: [themeManager.current.fieldPrimary,
+                             themeManager.current.fieldSecondary],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ))
             RoundedRectangle(cornerRadius: 12)
                 .strokeBorder(.white.opacity(0.4), lineWidth: 1)
 
@@ -282,17 +311,18 @@ struct LiveGameView: View {
 // MARK: – Player token on field
 
 private struct PlayerTokenView: View {
+    @Environment(\.themeManager) private var themeManager
     let appearance: PlayerGameAppearance
 
     var body: some View {
         VStack(spacing: 3) {
             ZStack {
                 Circle()
-                    .fill(.white.opacity(0.9))
+                    .fill(themeManager.current.onFieldMarker)
                     .frame(width: 38, height: 38)
                 Text("#\(appearance.player?.jerseyNumber ?? 0)")
                     .font(.caption.bold())
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.white)
             }
             Text(firstName)
                 .font(.system(size: 9))

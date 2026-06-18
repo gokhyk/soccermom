@@ -153,10 +153,29 @@ final class LiveGameViewModel {
     }
 
     private func endGame() {
-        isPeriodEnded    = false
-        isGameOver       = true
-        game.status      = .completed
+        guard game.status != .completed else { return }  // idempotency
+        isPeriodEnded = false
+        isGameOver    = true
+        game.status   = .completed
+
+        // Roll every appearance's stats up into the player's season totals.
+        for appearance in game.appearances {
+            guard let player = appearance.player else { continue }
+            player.seasonPlayedSeconds   += appearance.secondsPlayed
+            player.seasonCreditedSeconds += appearance.secondsCredited
+        }
         try? context.save()
+    }
+
+    /// Ends the game immediately regardless of which period is running.
+    /// Stops the clock, clears any pending overlay, and triggers the season roll-up.
+    func endGameManually() {
+        guard !isGameOver else { return }
+        stopClock()
+        showSubstitutionOverlay = false
+        pendingSubstitutions    = []
+        isPeriodEnded           = false
+        endGame()
     }
 
     // MARK: – Substitution overlay
