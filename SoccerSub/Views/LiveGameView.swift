@@ -359,6 +359,7 @@ private struct BenchRowView: View {
 // MARK: – Substitution overlay sheet
 
 private struct SubstitutionOverlayView: View {
+    @Environment(\.themeManager) private var themeManager
     @Bindable var viewModel: LiveGameViewModel
 
     var body: some View {
@@ -381,7 +382,7 @@ private struct SubstitutionOverlayView: View {
                                 }
                                 Spacer()
                                 Image(systemName: "arrow.left.arrow.right")
-                                    .foregroundStyle(.blue)
+                                    .foregroundStyle(themeManager.current.accent)
                                 Spacer()
                                 VStack(alignment: .trailing) {
                                     Text("On: \(playerName(id: pair.playerIn.id))")
