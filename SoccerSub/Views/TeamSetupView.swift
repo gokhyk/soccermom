@@ -5,6 +5,7 @@ struct TeamSetupView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: TeamSetupViewModel
+    @State private var showDeleteConfirmation = false
 
     init(editing team: Team? = nil) {
         _viewModel = State(initialValue: TeamSetupViewModel(editing: team))
@@ -24,6 +25,14 @@ struct TeamSetupView: View {
                         Text("Select age group…").tag("")
                         ForEach(AgeGroupDefaults.allAgeGroups, id: \.self) { group in
                             Text(group).tag(group)
+                        }
+                    }
+                }
+
+                if viewModel.isEditingExisting {
+                    Section {
+                        Button("Delete Team", role: .destructive) {
+                            showDeleteConfirmation = true
                         }
                     }
                 }
@@ -72,6 +81,15 @@ struct TeamSetupView: View {
                     }
                     .disabled(!viewModel.isValid)
                 }
+            }
+            .alert("Delete Team?", isPresented: $showDeleteConfirmation) {
+                Button("Delete", role: .destructive) {
+                    viewModel.deleteTeam(from: modelContext)
+                    dismiss()
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("This will permanently delete the team along with all its players and games. This cannot be undone.")
             }
         }
     }

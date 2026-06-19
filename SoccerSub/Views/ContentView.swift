@@ -6,28 +6,27 @@ struct ContentView: View {
     @Query(sort: \Team.name) private var teams: [Team]
 
     @State private var showAddTeam = false
-    @State private var teamToEdit: Team?
 
     var body: some View {
         NavigationStack {
             List {
                 ForEach(teams) { team in
-                    Section(team.name) {
-                        NavigationLink("Roster") {
-                            RosterView(team: team)
+                    NavigationLink(destination: TeamDetailView(team: team)) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(team.name)
+                                .font(.headline)
+                            if !team.leagueName.isEmpty {
+                                Text(team.leagueName)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
-                        NavigationLink("Games") {
-                            GameManagementView(team: team)
-                        }
+                        .padding(.vertical, 2)
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) { deleteTeam(team) } label: {
                             Label("Delete", systemImage: "trash")
                         }
-                        Button { teamToEdit = team } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        .tint(.blue)
                     }
                 }
             }
@@ -57,9 +56,6 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showAddTeam) {
                 TeamSetupView()
-            }
-            .sheet(item: $teamToEdit) { team in
-                TeamSetupView(editing: team)
             }
         }
     }

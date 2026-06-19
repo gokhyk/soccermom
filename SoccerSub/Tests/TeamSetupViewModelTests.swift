@@ -222,6 +222,42 @@ struct TeamSetupViewModelTests {
         #expect(vm.periodDurationSeconds == 1800)
     }
 
+    // MARK: Delete
+
+    @Test("deleteTeam removes the team and cascades to players and games")
+    func deleteTeamCascades() throws {
+        let container = try makeContainer()
+        let ctx = ModelContext(container)
+
+        let team = Team(name: "Rockets")
+        ctx.insert(team)
+        let player = Player(name: "Alice", jerseyNumber: 1)
+        player.team = team
+        ctx.insert(player)
+        let game = Game(opponent: "Rival")
+        game.team = team
+        ctx.insert(game)
+        try ctx.save()
+
+        let vm = TeamSetupViewModel(editing: team)
+        vm.deleteTeam(from: ctx)
+
+        #expect(try ctx.fetch(FetchDescriptor<Team>()).isEmpty)
+        #expect(try ctx.fetch(FetchDescriptor<Player>()).isEmpty)
+        #expect(try ctx.fetch(FetchDescriptor<Game>()).isEmpty)
+    }
+
+    @Test("deleteTeam is a no-op in create mode")
+    func deleteTeamNoOpInCreateMode() throws {
+        let container = try makeContainer()
+        let ctx = ModelContext(container)
+
+        let vm = TeamSetupViewModel()
+        vm.deleteTeam(from: ctx)    // should not crash or insert anything
+
+        #expect(try ctx.fetch(FetchDescriptor<Team>()).isEmpty)
+    }
+
     @Test("Edit mode: isEditingExisting is true; create mode: false")
     func isEditingExistingFlag() throws {
         let container = try makeContainer()

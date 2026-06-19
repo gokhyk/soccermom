@@ -46,6 +46,12 @@ final class TeamSetupViewModel {
         breakDurationSeconds  = d.breakDurationSeconds
     }
 
+    func deleteTeam(from context: ModelContext) {
+        guard let team = editingTeam else { return }
+        context.delete(team)
+        try? context.save()
+    }
+
     func save(to context: ModelContext) {
         guard isValid else { return }
         if let team = editingTeam {
