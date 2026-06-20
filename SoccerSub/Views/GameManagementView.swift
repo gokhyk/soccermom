@@ -15,7 +15,7 @@ struct GameManagementView: View {
     var body: some View {
         List {
             ForEach(sortedGames) { game in
-                NavigationLink(destination: AvailabilityView(game: game)) {
+                NavigationLink(destination: GameDetailView(game: game, team: team)) {
                     GameRow(game: game)
                 }
                 .swipeActions(edge: .leading) {
