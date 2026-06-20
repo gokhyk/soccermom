@@ -68,6 +68,17 @@ final class AvailabilityViewModel {
         let target = targetSecondsPerPlayer
         game.substitutionFrequency = substitutionFrequency
 
+        // Auto-select starters from available players, ranked by least season credited time.
+        let candidates = rows
+            .filter { $0.status == .available }
+            .map { GameStartLogic.StarterCandidate(
+                id: $0.player.id,
+                seasonCreditedSeconds: $0.player.seasonCreditedSeconds,
+                eligiblePositions: $0.player.eligiblePositions
+            )}
+        let assignments = GameStartLogic.autoSelectStarters(from: candidates, count: game.playersOnField)
+        let starterPositions = Dictionary(uniqueKeysWithValues: assignments)
+
         for row in rows {
             // Upsert Availability
             if let existing = game.availabilities.first(where: { $0.player?.id == row.player.id }) {
@@ -79,22 +90,27 @@ final class AvailabilityViewModel {
                 context.insert(avail)
             }
 
-            // Upsert PlayerGameAppearance
-            // Absent players: secondsCredited fixed at target; available: starts at 0 (updates live).
+            // Upsert PlayerGameAppearance.
+            // Absent: credited at target. Starters: on field. Remaining available: bench.
             let creditedSeconds = row.status == .available ? 0 : target
-            let fieldStatus: OnFieldStatus = row.status == .available ? .bench : .absent
+            let positionAssigned = starterPositions[row.player.id]
+            let fieldStatus: OnFieldStatus = row.status == .available
+                ? (positionAssigned != nil ? .onField : .bench)
+                : .absent
 
             if let existing = game.appearances.first(where: { $0.player?.id == row.player.id }) {
-                existing.secondsCredited = creditedSeconds
-                existing.onFieldStatus = fieldStatus
+                existing.secondsCredited   = creditedSeconds
+                existing.onFieldStatus     = fieldStatus
+                existing.positionAssigned  = positionAssigned
             } else {
                 let appearance = PlayerGameAppearance(
                     secondsPlayed: 0,
                     secondsCredited: creditedSeconds,
-                    onFieldStatus: fieldStatus
+                    onFieldStatus: fieldStatus,
+                    positionAssigned: positionAssigned
                 )
                 appearance.player = row.player
-                appearance.game = game
+                appearance.game   = game
                 context.insert(appearance)
             }
         }
