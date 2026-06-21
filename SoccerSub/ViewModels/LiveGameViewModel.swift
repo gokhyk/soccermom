@@ -148,6 +148,18 @@ final class LiveGameViewModel {
         endPeriod()
     }
 
+    /// Called when the coach taps "Break": advances to the next period and clears
+    /// isPeriodEnded so the alert dismisses and BreakView can be pushed.
+    /// Does NOT start the clock — the coach blows the whistle after the break.
+    func startBreak() {
+        guard isPeriodEnded, currentPeriod < game.numberOfPeriods else { return }
+        currentPeriod       += 1
+        isPeriodEnded        = false
+        elapsedPeriodSeconds = 0
+        lastTickElapsed      = 0
+        periodStartDate      = nil
+    }
+
     func advancePeriod() {
         guard isPeriodEnded else { return }
         if currentPeriod >= game.numberOfPeriods {

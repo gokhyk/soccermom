@@ -24,6 +24,8 @@ struct LiveGameView: View {
 
     // End-game confirmation
     @State private var showEndGameConfirmation = false
+    // Break between periods
+    @State private var showBreak = false
 
     init(game: Game, context: ModelContext) {
         self.game = game
@@ -87,18 +89,24 @@ struct LiveGameView: View {
             "Period \(viewModel.currentPeriod) Over",
             isPresented: $viewModel.isPeriodEnded
         ) {
-            if viewModel.currentPeriod < game.numberOfPeriods {
-                Button("Start Period \(viewModel.currentPeriod + 1)") {
-                    viewModel.advancePeriod()
-                }
-            } else {
+            if isLastPeriod {
                 Button("End Game", role: .destructive) {
                     viewModel.advancePeriod()
                 }
+            } else {
+                Button("Break") {
+                    viewModel.startBreak()
+                    showBreak = true
+                }
             }
-            Button("Stay", role: .cancel) { }
         } message: {
-            Text("The period clock has reached \(game.periodDurationSeconds / 60) minutes.")
+            Text(isLastPeriod
+                 ? "All periods complete. End the game?"
+                 : "Take a \(game.breakDurationSeconds / 60)-minute break before Period \(viewModel.currentPeriod + 1).")
+        }
+        // Break between periods
+        .navigationDestination(isPresented: $showBreak) {
+            BreakView(game: game, viewModel: viewModel)
         }
         // Game over
         .alert("Game Over", isPresented: $viewModel.isGameOver) {
@@ -452,7 +460,7 @@ private struct SubstitutionOverlayView: View {
             }
             .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
                 if countdown > 0 {
-                    withAnimation { countdown -= 1 }
+                    withAnimation { countdown = max(0, countdown - viewModel.speedMultiplier) }
                 } else {
                     viewModel.dismissSubstitutionOverlay()
                 }
@@ -464,5 +472,59 @@ private struct SubstitutionOverlayView: View {
         viewModel.game.appearances
             .first(where: { $0.player?.id == id })?
             .player?.name ?? "?"
+    }
+}
+
+// MARK: – Break screen
+
+private struct BreakView: View {
+    let game: Game
+    @Bindable var viewModel: LiveGameViewModel
+
+    @State private var countdown: Int
+    @Environment(\.dismiss) private var dismiss
+
+    init(game: Game, viewModel: LiveGameViewModel) {
+        self.game = game
+        self.viewModel = viewModel
+        _countdown = State(initialValue: game.breakDurationSeconds)
+    }
+
+    var body: some View {
+        VStack(spacing: 32) {
+            Spacer()
+
+            Text(game.numberOfPeriods == 2 ? "Half Time" : "Break")
+                .font(.largeTitle.bold())
+
+            Text(timeString)
+                .font(.system(size: 72, weight: .bold, design: .monospaced))
+                .foregroundStyle(countdown <= 30 ? Color.orange : Color.primary)
+                .contentTransition(.numericText(countsDown: true))
+
+            Spacer()
+
+            Button("Start Period \(viewModel.currentPeriod)") {
+                dismiss()
+            }
+            .buttonStyle(.borderedProminent)
+            .font(.headline)
+            .padding(.horizontal)
+            .padding(.bottom, 32)
+        }
+        .navigationTitle("Break")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+            if countdown > 0 {
+                withAnimation { countdown = max(0, countdown - viewModel.speedMultiplier) }
+            } else {
+                dismiss()
+            }
+        }
+    }
+
+    private var timeString: String {
+        String(format: "%02d:%02d", countdown / 60, countdown % 60)
     }
 }
