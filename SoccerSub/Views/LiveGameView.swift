@@ -259,11 +259,7 @@ struct LiveGameView: View {
             } else if viewModel.isPeriodEnded {
                 EmptyView()
             } else if viewModel.isRunning {
-                Button(role: .destructive, action: viewModel.stopClock) {
-                    Label("Pause Clock", systemImage: "pause.circle.fill")
-                        .font(.headline)
-                }
-                .padding(.vertical, 12)
+                EmptyView()
             } else {
                 Button(action: viewModel.blowWhistle) {
                     Label("Whistle — Start Period \(viewModel.currentPeriod)", systemImage: "whistle.fill")
@@ -393,6 +389,8 @@ private struct SubstitutionOverlayView: View {
     @Environment(\.themeManager) private var themeManager
     @Bindable var viewModel: LiveGameViewModel
 
+    @State private var countdown = SubstitutionEngine.warningLeadSeconds
+
     var body: some View {
         NavigationStack {
             List {
@@ -405,7 +403,8 @@ private struct SubstitutionOverlayView: View {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text("Off: \(playerName(id: pair.playerOut.id))")
-                                        .font(.subheadline)
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundStyle(.red)
                                     Text("\(TimeFormatting.format(pair.playerOut.secondsPlayed)) played")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
@@ -416,7 +415,8 @@ private struct SubstitutionOverlayView: View {
                                 Spacer()
                                 VStack(alignment: .trailing) {
                                     Text("On: \(playerName(id: pair.playerIn.id))")
-                                        .font(.subheadline)
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundStyle(.green)
                                     Text("\(TimeFormatting.format(pair.playerIn.secondsPlayed)) played")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
@@ -426,9 +426,20 @@ private struct SubstitutionOverlayView: View {
                     }
                 }
             }
-            .navigationTitle("Sub Suggestion")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack(spacing: 6) {
+                        Text("Sub Suggestion")
+                            .font(.headline)
+                        Text("·")
+                            .foregroundStyle(.secondary)
+                        Text("\(countdown)s")
+                            .font(.headline.monospacedDigit())
+                            .foregroundStyle(countdown <= 10 ? Color.red : Color.orange)
+                            .contentTransition(.numericText(countsDown: true))
+                    }
+                }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Skip") { viewModel.dismissSubstitutionOverlay() }
                 }
@@ -437,6 +448,13 @@ private struct SubstitutionOverlayView: View {
                         viewModel.applySubstitutions()
                     }
                     .disabled(viewModel.pendingSubstitutions.isEmpty)
+                }
+            }
+            .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+                if countdown > 0 {
+                    withAnimation { countdown -= 1 }
+                } else {
+                    viewModel.dismissSubstitutionOverlay()
                 }
             }
         }
