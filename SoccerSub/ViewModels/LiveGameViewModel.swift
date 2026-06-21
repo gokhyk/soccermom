@@ -12,6 +12,7 @@ final class LiveGameViewModel {
     var isRunning: Bool = false
     var isPeriodEnded: Bool = false
     var isGameOver: Bool = false
+    var hasStarted: Bool = false       // true once the first whistle is blown; never resets
     var showSubstitutionOverlay: Bool = false
     var pendingSubstitutions: [SubstitutionPair] = []
 
@@ -81,7 +82,8 @@ final class LiveGameViewModel {
         guard canBlowWhistle else { return }
         periodStartDate = clock()
         lastTickElapsed = 0
-        isRunning = true
+        isRunning  = true
+        hasStarted = true
         startTimer()
     }
 

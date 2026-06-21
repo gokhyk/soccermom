@@ -43,6 +43,7 @@ struct LiveGameView: View {
         }
         .navigationTitle("vs \(game.opponent)")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(viewModel.hasStarted)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !viewModel.isGameOver {
@@ -370,8 +371,7 @@ private struct SubstitutionOverlayView: View {
                         Text("No substitutions needed right now.")
                             .foregroundStyle(.secondary)
                     } else {
-                        ForEach(viewModel.pendingSubstitutions.indices, id: \.self) { i in
-                            let pair = viewModel.pendingSubstitutions[i]
+                        ForEach(viewModel.pendingSubstitutions, id: \.playerOut.id) { pair in
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text("Off: \(playerName(id: pair.playerOut.id))")
