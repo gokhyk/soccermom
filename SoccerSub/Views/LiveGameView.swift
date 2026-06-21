@@ -46,10 +46,16 @@ struct LiveGameView: View {
         .navigationBarBackButtonHidden(viewModel.hasStarted)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if !viewModel.isGameOver {
+                if !viewModel.isGameOver, !viewModel.isPeriodEnded {
                     Menu {
-                        Button("End Game", role: .destructive) {
-                            showEndGameConfirmation = true
+                        if isLastPeriod {
+                            Button("End Game", role: .destructive) {
+                                showEndGameConfirmation = true
+                            }
+                        } else {
+                            Button("End Period", role: .destructive) {
+                                showEndGameConfirmation = true
+                            }
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")
@@ -57,11 +63,20 @@ struct LiveGameView: View {
                 }
             }
         }
-        .alert("End Game?", isPresented: $showEndGameConfirmation) {
-            Button("End Game", role: .destructive) { viewModel.endGameManually() }
+        .alert(isLastPeriod ? "End Game?" : "End Period?",
+               isPresented: $showEndGameConfirmation) {
+            Button(isLastPeriod ? "End Game" : "End Period", role: .destructive) {
+                if isLastPeriod {
+                    viewModel.endGameManually()
+                } else {
+                    viewModel.endCurrentPeriodManually()
+                }
+            }
             Button("Cancel", role: .cancel) { }
         } message: {
-            Text("This will end the game and save season stats. This cannot be undone.")
+            Text(isLastPeriod
+                 ? "This will end the game and save season stats. This cannot be undone."
+                 : "This will end Period \(viewModel.currentPeriod) and show the break screen.")
         }
         // Scheduled substitution overlay
         .sheet(isPresented: $viewModel.showSubstitutionOverlay) {
@@ -145,6 +160,8 @@ struct LiveGameView: View {
         }
     }
 
+    private var isLastPeriod: Bool { viewModel.currentPeriod >= game.numberOfPeriods }
+
     // MARK: – Top bar
 
     private var topBar: some View {
@@ -155,6 +172,19 @@ struct LiveGameView: View {
             Text(timeDisplay)
                 .font(.system(.title3, design: .monospaced).weight(.semibold))
                 .foregroundStyle(viewModel.isRunning ? .primary : .secondary)
+            if !viewModel.isGameOver {
+                Button {
+                    viewModel.speedMultiplier = viewModel.speedMultiplier == 1 ? 10 : 1
+                } label: {
+                    Text(viewModel.speedMultiplier == 1 ? "1×" : "10×")
+                        .font(.caption.weight(.semibold))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(.secondary.opacity(0.2), in: Capsule())
+                        .foregroundStyle(viewModel.speedMultiplier == 1 ? Color.secondary : Color.orange)
+                }
+                .buttonStyle(.plain)
+            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

@@ -13,6 +13,7 @@ final class LiveGameViewModel {
     var isPeriodEnded: Bool = false
     var isGameOver: Bool = false
     var hasStarted: Bool = false       // true once the first whistle is blown; never resets
+    var speedMultiplier: Int = 1       // 1 = real time, 10 = 10× for testing
     var showSubstitutionOverlay: Bool = false
     var pendingSubstitutions: [SubstitutionPair] = []
 
@@ -107,7 +108,7 @@ final class LiveGameViewModel {
     func processTick(now: Date) {
         guard let startDate = periodStartDate else { return }
 
-        let newElapsed = LiveGameLogic.elapsedSeconds(since: startDate, now: now)
+        let newElapsed = LiveGameLogic.elapsedSeconds(since: startDate, now: now) * speedMultiplier
         let delta = newElapsed - lastTickElapsed
         guard delta >= 0 else { return }
 
@@ -132,13 +133,19 @@ final class LiveGameViewModel {
 
     // MARK: – Period / game lifecycle
 
-    private func endPeriod() {
+    func endPeriod() {
         stopClock()
-        isPeriodEnded        = true
+        isPeriodEnded           = true
         showSubstitutionOverlay = false
-        pendingSubstitutions = []
+        pendingSubstitutions    = []
         lastPromptedCheckpoint  = nil
-        elapsedPeriodSeconds = game.periodDurationSeconds
+        elapsedPeriodSeconds    = game.periodDurationSeconds
+    }
+
+    /// Manually ends the current period (same effect as the clock reaching zero).
+    func endCurrentPeriodManually() {
+        guard !isPeriodEnded, !isGameOver else { return }
+        endPeriod()
     }
 
     func advancePeriod() {
