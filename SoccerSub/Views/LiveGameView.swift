@@ -3,6 +3,7 @@ import SwiftData
 
 struct LiveGameView: View {
     @Environment(\.themeManager) private var themeManager
+    @Environment(\.dismiss) private var dismiss
 
     let game: Game
     @State private var viewModel: LiveGameViewModel
@@ -108,11 +109,26 @@ struct LiveGameView: View {
         .navigationDestination(isPresented: $showBreak) {
             BreakView(game: game, viewModel: viewModel)
         }
-        // Game over
-        .alert("Game Over", isPresented: $viewModel.isGameOver) {
-            Button("OK") { }
-        } message: {
-            Text("All periods complete. Game marked as done.")
+        // Game over — show a brief full-screen overlay then auto-return to game list
+        .overlay {
+            if viewModel.isGameOver {
+                ZStack {
+                    Color.black.opacity(0.65).ignoresSafeArea()
+                    VStack(spacing: 16) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 72))
+                            .foregroundStyle(.green)
+                        Text("Game Complete")
+                            .font(.largeTitle.bold())
+                            .foregroundStyle(.white)
+                    }
+                }
+            }
+        }
+        .task(id: viewModel.isGameOver) {
+            guard viewModel.isGameOver else { return }
+            try? await Task.sleep(for: .seconds(1.5))
+            dismiss()
         }
         // Injury reason (step 1)
         .confirmationDialog(

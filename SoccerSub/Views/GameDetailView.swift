@@ -3,6 +3,7 @@ import SwiftData
 
 struct GameDetailView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
 
     let team: Team
     let game: Game
@@ -110,6 +111,12 @@ struct GameDetailView: View {
                 game.dateTime.formatted(.dateTime.weekday(.wide).month().day().hour().minute()) +
                 ". Start it now anyway?"
             )
+        }
+        .onChange(of: gameStarted) { old, new in
+            // LiveGameView was dismissed (gameStarted went true→false) and the game finished
+            if old == true, new == false, game.status == .completed {
+                dismiss()
+            }
         }
         .navigationDestination(isPresented: $gameStarted) {
             LiveGameView(game: game, context: modelContext)
